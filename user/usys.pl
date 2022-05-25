@@ -37,3 +37,4 @@ entry("sbrk");
 entry("sleep");
 entry("trace");
 entry("uptime");
+entry("sysinfo");

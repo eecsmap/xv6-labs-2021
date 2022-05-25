@@ -191,6 +191,7 @@ UPROGS=\
 	$U/_stressfs\
 	$U/_usertests\
 	$U/_grind\
+	$U/_sysinfotest\
 	$U/_trace\
 	$U/_wc\
 	$U/_zombie\

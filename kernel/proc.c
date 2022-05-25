@@ -97,6 +97,8 @@ allocpid() {
   return pid;
 }
 
+static uint64 nproc = 0;
+
 // Look in the process table for an UNUSED proc.
 // If found, initialize state required to run in the kernel,
 // and return with p->lock held.
@@ -141,6 +143,7 @@ found:
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
 
+  nproc++;
   return p;
 }
 
@@ -164,6 +167,12 @@ freeproc(struct proc *p)
   p->killed = 0;
   p->xstate = 0;
   p->state = UNUSED;
+  nproc--;
+}
+
+uint64 get_nproc(void)
+{
+  return nproc;
 }
 
 // Create a user page table for a given process,

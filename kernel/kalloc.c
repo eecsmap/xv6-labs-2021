@@ -30,6 +30,8 @@ kinit()
   freerange(end, (void*)PHYSTOP);
 }
 
+static uint64 nfree = 0;
+
 void
 freerange(void *pa_start, void *pa_end)
 {
@@ -60,6 +62,7 @@ kfree(void *pa)
   r->next = kmem.freelist;
   kmem.freelist = r;
   release(&kmem.lock);
+  nfree++;
 }
 
 // Allocate one 4096-byte page of physical memory.
@@ -76,7 +79,14 @@ kalloc(void)
     kmem.freelist = r->next;
   release(&kmem.lock);
 
-  if(r)
+  if(r) {
     memset((char*)r, 5, PGSIZE); // fill with junk
+    nfree--;
+  }
   return (void*)r;
+}
+
+uint64 get_freemem(void)
+{
+  return nfree * PGSIZE;
 }
