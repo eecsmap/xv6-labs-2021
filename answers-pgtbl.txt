@@ -1,0 +1,6 @@
+Page 0 contains the user program text.
+Page 2 is the user program stack, holds the argc and argv as inited.
+Page 1 contains the user program stack guard, which is not accessible in user mode.
+The 3rd-last is the usyscall page, read only.
+The 2nd-last is the trapframe is the trapframe for switch in and out kernel, read & write.
+The last is the trampoline which hold jump code (vector), as read & execute.
